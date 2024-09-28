@@ -1,14 +1,15 @@
 import React from "react";
 import { Container, Logo, LogoutBtn } from "../index";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Header() {
   const authStatus = useSelector((state) => {
-    state.status;
+    state.auth.status;
   });
 
-  //TODO: Use redirect from react-router-dom
+  //TODO: Use navigate from react-router-dom
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -21,12 +22,12 @@ function Header() {
       slug: "/login",
       active: !authStatus,
     },
-    { 
+    {
       name: "SignUp",
       slug: "/signup",
       active: !authStatus,
     },
-    { 
+    {
       name: "AllPosts",
       slug: "/all-posts",
       active: authStatus,
@@ -53,7 +54,7 @@ function Header() {
                 <li key={item.name}>
                   <button
                     className="inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
-                    onClick={() => redirect(item.slug)}
+                    onClick={() => navigate(item.slug)}
                   >
                     {item.name}
                   </button>

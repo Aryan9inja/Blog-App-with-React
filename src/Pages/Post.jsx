@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, redirect, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../Appwrite/config";
 import { Button, Container } from "../Components";
 import parse from "html-react-parser";
@@ -10,6 +10,8 @@ export default function Post() {
   const { slug } = useParams();
 
   const userData = useSelector((state) => state.auth.userData);
+  
+  const navigate=useNavigate()
 
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
@@ -17,16 +19,16 @@ export default function Post() {
     if (slug) {
       appwriteService.getPost(slug).then((post) => {
         if (post) setPost(post);
-        else redirect("/");
+        else navigate("/");
       });
-    } else redirect("/");
-  }, [slug, redirect]);
+    } else navigate("/");
+  }, [slug, navigate]);
 
   const deletePost = () => {
     appwriteService.deletePost(post.$id).then((status) => {
       if (status) {
         appwriteService.deleteFile(post.featuredImage);
-        redirect("/");
+        navigate("/");
       }
     });
   };

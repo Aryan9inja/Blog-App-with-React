@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import authService from "../Appwrite/auth";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../store/AuthSlice";
 import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ function SignUp() {
   const dispatch = useDispatch();
   const {register, handleSubmit} = useForm();
   const [error, setError] = useState("");
+  const navigate=useNavigate()
 
   const create = async (data) => {
     setError("");
@@ -18,7 +19,7 @@ function SignUp() {
       if (session) {
         const userData = await authService.getCurrentUser();
         if (userData) dispatch(login(userData));
-        redirect("/");
+        navigate("/");
       }
     } catch (error) {
       setError(error.message);

@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Select, Input, RTE } from "../index";
 import appwriteService from "../../Appwrite/config";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function PostForm({ post }) {
@@ -17,6 +17,7 @@ export default function PostForm({ post }) {
     });
 
   const userData = useSelector((state) => state.auth.userData);
+  const navigate = useNavigate();
 
   const submit = async (data) => {
     if (post) {
@@ -31,7 +32,7 @@ export default function PostForm({ post }) {
         featuredImage: file ? file.$id : undefined,
       });
       if (db_post) {
-        redirect(`/post/${db_post.$id}`);
+        navigate(`/post/${db_post.$id}`);
       }
     } else {
       const file = await appwriteService.uploadFile(data.image[0]);
@@ -43,7 +44,7 @@ export default function PostForm({ post }) {
           userId: userData.$id,
         });
         if (db_post) {
-          redirect(`/post/${db_post.$id}`);
+          navigate(`/post/${db_post.$id}`);
         }
       }
     }
@@ -60,7 +61,7 @@ export default function PostForm({ post }) {
   });
 
   React.useEffect(() => {
-    const subscription = watch((value, {name}) => {
+    const subscription = watch((value, { name }) => {
       if (name === "title") {
         setValue("slug", slugTransform(value.title), { shouldValidate: true });
       }

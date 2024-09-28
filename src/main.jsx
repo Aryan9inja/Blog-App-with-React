@@ -19,7 +19,7 @@ import EditPost from "./Pages/EditPost";
 import Login from "./Pages/Login.jsx";
 import Post from "./Pages/Post";
 
-import AllPosts from "./pages/AllPosts";
+import AllPosts from "./Pages/AllPosts";
 
 // const router = createBrowserRouter([
 //   {

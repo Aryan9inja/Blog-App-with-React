@@ -1,21 +1,22 @@
 import React, { useId } from "react";
 
-function Select({ options, label, className, ...props }, refrence) {
-  const id = useId;
+function Select({ options = [], label, className, ...props }, ref) {
+  const id = useId(); // Call useId as a function to generate an ID
   return (
     <div className="w-full">
-      {label && <label htmlFor={id}></label>}
+      {label && <label htmlFor={id}>{label}</label>} {/* Display label */}
       <select
         {...props}
         id={id}
-        ref={refrence}
+        ref={ref}
         className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`}
-      ></select>
-      {options?.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

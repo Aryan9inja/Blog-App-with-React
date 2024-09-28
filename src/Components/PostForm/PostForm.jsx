@@ -5,7 +5,7 @@ import appwriteService from "../../Appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function PostForm({ post }) {
+export default function PostForm({ post }) { 
   const { register, handleSubmit, watch, setValue, getValues, control } =
     useForm({
       defaultValues: {
@@ -51,14 +51,17 @@ export default function PostForm({ post }) {
   };
 
   const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string")
+    if (value && typeof value === "string") {
       return value
         .trim()
-        .toLowerCase()
-        .replace(/^[a-zA-Z\d]+/g, "-");
-
+        .toLowerCase()  // convert to lowercase
+        .replace(/\s+/g, "-") // replace spaces with dashes
+        .replace(/[^a-z0-9\-]/g, ""); // remove invalid characters (non-alphanumeric and non-dash)
+    }
+  
     return "";
-  });
+  }, []);
+  
 
   React.useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -124,11 +127,10 @@ export default function PostForm({ post }) {
         />
         <Button
           type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
+          bgColor={post ? "bg-green-500" : "bg-blue-500"}
           className="w-full"
-        >
-          {post ? "Update" : "Submit"}
-        </Button>
+          Children={post ? "Update" : "Submit"}
+        />
       </div>
     </form>
   );

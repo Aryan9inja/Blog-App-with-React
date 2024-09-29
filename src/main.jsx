@@ -13,11 +13,11 @@ import {
 import Home from "./Pages/Home.jsx";
 import { Protected as AuthLayout } from "./Components";
 
-import AddPost from "./Pages/AddPost";
-import Signup from "./Pages/Signup";
-import EditPost from "./Pages/EditPost";
+import AddPost from "./Pages/AddPost.jsx";
+import Signup from "./Pages/SignUp.jsx";
+import EditPost from "./Pages/EditPost.jsx";
 import Login from "./Pages/Login.jsx";
-import Post from "./Pages/Post";
+import Post from "./Pages/Post.jsx";
 
 import AllPosts from "./Pages/AllPosts";
 

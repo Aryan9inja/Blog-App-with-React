@@ -8,14 +8,15 @@ import { useSelector } from "react-redux";
 export default function Post() {
   const [post, setPost] = useState(null);
   const { slug } = useParams();
-
   const userData = useSelector((state) => state.auth.userData);
-  
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
   useEffect(() => {
+    // Scroll to top when the component mounts
+    window.scrollTo(0, 0);
+
     if (slug) {
       appwriteService.getPost(slug).then((post) => {
         if (post) setPost(post);
@@ -46,18 +47,17 @@ export default function Post() {
               />
 
               {isAuthor && (
-                <div className="absolute right-6 top-6">
+                <div className="absolute right-6 top-6 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
                   <Link to={`/edit-post/${post.$id}`}>
                     <Button
-                      bgColor="bg-green-500"
-                      className="mr-3"
-                      Children={"Edit"}
+                      className="mr-3 bg-green-500 py-2 px-4 rounded-lg"
+                      children={"Edit"}
                     />
                   </Link>
                   <Button
                     bgColor="bg-red-500"
                     onClick={deletePost}
-                    Children={"Delete"}
+                    children={"Delete"}
                   />
                 </div>
               )}

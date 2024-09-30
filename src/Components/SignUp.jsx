@@ -93,9 +93,10 @@ function SignUp() {
               })}
             />
             <Button
+              style={{backgroundColor:"#2563eb", color:"#ffffff"}}
               type="submit"
-              Children={"Create Account"}
-              className="w-full"
+              children={"Create Account"}
+              className="w-full rounded-lg px-4 py-2"
             />
           </div>
         </form>

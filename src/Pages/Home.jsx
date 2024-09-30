@@ -37,7 +37,10 @@ function Home() {
         children={
           <div className="flex flex-wrap">
             {posts.map((post) => (
-              <div className="p-2 w-1/4" key={post.$id}>
+              <div
+                className="p-2 w-full sm:w-1/2 md:w-1/4" // Responsive widths for different screen sizes
+                key={post.$id}
+              >
                 <PostCard {...post} />
               </div>
             ))}

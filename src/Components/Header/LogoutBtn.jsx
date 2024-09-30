@@ -5,7 +5,7 @@ import { logout } from "../../store/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../../store/LoadingSlice";
 
-function LogoutBtn() {
+function LogoutBtn({ setIsMenuOpen }) { // Accept setIsMenuOpen as a prop
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ function LogoutBtn() {
     try {
       await authService.logout();
       dispatch(logout());
+      setIsMenuOpen(false); // Close the menu after logout
       navigate("/login");
     } catch (error) {
       setError(error.message);

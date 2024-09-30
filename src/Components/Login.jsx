@@ -5,6 +5,7 @@ import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import authService from "../Appwrite/auth";
 import { useForm } from "react-hook-form";
+import { hideLoading, showLoading } from "../store/LoadingSlice";
 
 function Login() {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ function Login() {
 
   const login = async (data) => {
     setError("");
+    dispatch(showLoading())
+
     try {
       const session = await authService.login(data);
       if (session) {
@@ -24,6 +27,9 @@ function Login() {
       }
     } catch (error) {
       setError(error.message);
+    }
+    finally{
+      dispatch(hideLoading());
     }
   };
 

@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import { Button, Select, Input, RTE } from "../index";
 import appwriteService from "../../Appwrite/config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { hideLoading, showLoading } from "../../store/LoadingSlice";
 
 export default function PostForm({ post }) { 
+  const dispatch=useDispatch()
+
   const { register, handleSubmit, watch, setValue, getValues, control } =
     useForm({
       defaultValues: {
@@ -20,6 +23,8 @@ export default function PostForm({ post }) {
   const navigate = useNavigate();
 
   const submit = async (data) => {
+    dispatch(showLoading());
+    
     if (post) {
       const file = data.image[0]
         ? await appwriteService.uploadFile(data.image[0])
@@ -41,13 +46,14 @@ export default function PostForm({ post }) {
         data.featuredImage = fileID;
         const db_post = await appwriteService.createPost({
           ...data,
-          userId: userData.$id,
+          userId: String(userData.$id),
         });
         if (db_post) {
           navigate(`/post/${db_post.$id}`);
         }
       }
     }
+    dispatch(hideLoading())
   };
 
   const slugTransform = useCallback((value) => {

@@ -21,43 +21,6 @@ import Post from "./Pages/Post.jsx";
 
 import AllPosts from "./Pages/AllPosts";
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <App />,
-//     children: [
-//       {
-//         path: "/",
-//         element: <Home />,
-//       },
-//       {
-//         path: "/login",
-//         element: <AuthLayout children={<Login />} authentication={false} />,
-//       },
-//       {
-//         path: "/signup",
-//         element: <AuthLayout children={<Signup />} authentication={false} />,
-//       },
-//       {
-//         path: "/all-posts",
-//         element: <AuthLayout children={<AllPosts />} authentication={true} />,
-//       },
-//       {
-//         path: "/add-post",
-//         element: <AuthLayout children={<AddPost />} authentication />,
-//       },
-//       {
-//         path: "/edit-post/:slug",
-//         element: <AuthLayout children={<EditPost />} authentication />,
-//       },
-//       {
-//         path: "/post/:slug",
-//         element: <Post />,
-//       },
-//     ],
-//   },
-// ]);
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>

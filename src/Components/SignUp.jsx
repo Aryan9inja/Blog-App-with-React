@@ -4,25 +4,32 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../store/AuthSlice";
 import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "../store/LoadingSlice";
 import { useForm } from "react-hook-form";
 
 function SignUp() {
   const dispatch = useDispatch();
-  const {register, handleSubmit} = useForm();
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const create = async (data) => {
     setError("");
+    dispatch(showLoading());
+
     try {
       const session = await authService.createAccount(data);
       if (session) {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(login(userData));
+        if (userData) {
+          dispatch(login(userData));
+        }
         navigate("/");
       }
     } catch (error) {
       setError(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
   };
 
@@ -43,7 +50,7 @@ function SignUp() {
             to="/login"
             className="font-medium text-primary transition-all duration-200 hover:underline"
           >
-            Sign Up
+            Sign In
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
@@ -69,10 +76,10 @@ function SignUp() {
                     ) || "Email address must be a valid address",
                 },
               })}
-            ></Input>
+            />
             <Input
               label="Password: "
-              placeholder="Enter your password" 
+              placeholder="Enter your password"
               type="password"
               {...register("password", {
                 required: true,
@@ -84,8 +91,12 @@ function SignUp() {
                     "Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number and should be 8 characters long",
                 },
               })}
-            ></Input>
-            <Button type="submit" Children={"Create Account"} clasName="w-full"/>
+            />
+            <Button
+              type="submit"
+              Children={"Create Account"}
+              className="w-full"
+            />
           </div>
         </form>
       </div>
